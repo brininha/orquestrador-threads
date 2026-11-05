@@ -1,0 +1,2 @@
+# Contexto central para IA - EP2 de SO
+Este repositório desenvolve uma simulação de concorrência com 100 threads em uma região crítica restrita a 36.242 registros. As regras fundamentais são: [Consultar requirements.md]. O sistema usa Padrão Strategy para travas. Não sugira bibliotecas externas ou alterações no `sleep(1)` obrigatório.
