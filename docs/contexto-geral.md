@@ -1,29 +1,18 @@
-# Contexto central - EP2 de Sistemas operacionais (Leitores e escritores)
+# Contexto geral do sistema
 
-**Objetivo do EP2**
-Implementar e analisar o desempenho de soluções para o problema clássico de Leitores e Escritores em concorrência, comparando uma abordagem de exclusão mútua simples (bloqueio total) com uma abordagem que prioriza leitores.
+Este projeto é um Exercício-Programa (EP) da disciplina de Sistemas Operacionais. O objetivo é simular e medir o desempenho do acesso concorrente a uma estrutura de dados, comparando uma abordagem com Leitores e Escritores (com prioridade para leitores) contra uma abordagem de bloqueio global (trava única para qualquer acesso).
 
-**Descrição geral da solução**
-O sistema orquestrará 100 threads (leitores ou escritores) operando simultaneamente sobre uma base de dados compartilhada na memória RAM[cite: 1]. Serão testadas 101 proporções (de 0 a 100 leitores), com 50 repetições cada, para gerar tempos médios de execução e embasar um relatório analítico final.
+## Requisitos de negócio e regras do experimento
+- A base de dados será carregada na memória a partir do arquivo `bd.txt` (36.242 palavras, uma por linha) em um arranjo, lista ligada ou estrutura equivalente de Strings.
+- O sistema criará um total exato de 100 threads, que podem ser instanciadas como Leitoras ou Escritoras dependendo da proporção da rodada.
+- O arranjo de 100 threads deve ser embaralhado aleatoriamente antes do início da execução para dissipar efeitos determinísticos.
+- Cada thread fará exatos 100 acessos a posições aleatórias da estrutura de dados. 
+- Se a thread for Leitora, ela lê a palavra da posição e armazena em uma variável local (que não será mais usada). Se for Escritora, ela escreve "MODIFICADO" na posição.
+- Terminados os 100 acessos, a thread deve dormir por 1ms **ainda dentro da região crítica**, saindo dela somente após acordar.
+- O sistema deve ser executado 50 vezes para cada proporção possível de Leitores/Escritores (de 0/100 até 100/0), extraindo o tempo médio de cada cenário.
 
-**Requisitos e restrições do enunciado**
-* **Base de dados:** O arquivo "bd.txt" (36.242 palavras) deve ser carregado na memória. Não é permitido escrever em disco durante a execução.
-* **Acesso:** Cada thread realiza 100 acessos em índices aleatórios. Leitores apenas guardam o valor localmente; escritores alteram a string para "MODIFICADO".
-* **Gargalo intencional:** Após os 100 acessos, a thread deve executar `sleep(1)` ainda dentro da região crítica.
-* **Granulação:** A base inteira deve ser travada como uma única região crítica.
-* **Regra de prioridade:** Na Versão 1, escritores devem esperar até que não haja mais leitores na base.
-* **Tempo:** O cronômetro inicia após o array de threads ser populado e para após o término da última thread (uso de `join()` é obrigatório)[cite: 2]. Prints no console são proibidos durante a tomada de tempo.
-
-**Arquitetura definida**
-* Padrão Strategy para injeção do mecanismo de sincronização (Mutex vs. Leitores/Escritores).
-* Separação estrita em camadas: I/O de dados, Modelagem das threads, Núcleo de concorrência, Orquestrador de baterias, e Exportador de relatórios.
-* Recriação completa do array de threads a cada nova rodada para evitar cache e estado viciado do Sistema Operacional.
-
-**Linguagem e ferramentas**
-* Linguagem: Java (padrão)
-* Bibliotecas: Apenas bibliotecas nativas de concorrência e I/O.
-* Testes/Métricas: Exportação para CSV.
-
-**Limitações e alertas**
-* Risco de inanição (starvation) dos escritores no cenário com 99 leitores.
-* Risco de estouro de memória se os objetos thread não forem descartados corretamente após as 50 execuções.
+## Decisões de design e restrições
+- **Zero I/O no disco durante a medição:** Nenhuma modificação será salva no disco para não prejudicar o tempo.
+- **Minimização de chamadas de sistema:** Estão proibidos `println` ou logs no console durante as regiões críticas e laços de acesso, pois isso acorda o escalonador do SO e distorce os tempos.
+- **Medição de tempo:** O tempo (`currentTimeMillis` ou `nanoTime`) deve ser marcado logo após o povoamento das threads (quando todas estão em estado `new` ou `runnable`, mas antes de efetivamente trabalharem) e o término da última thread (usando `join()`).
+- **Linguagem:** Java (versão moderna).
