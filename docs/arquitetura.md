@@ -46,9 +46,7 @@ Para garantir que o código das quatro frentes se conecte perfeitamente sem conf
 | **03-concorrencia**| `RegiaoCritica` | `void entrarEscritor()` | Trava a thread escritora caso a base não esteja 100% vazia. |
 | **03-concorrencia**| `RegiaoCritica` | `void sairEscritor()` | Libera a região e notifica outras threads na fila. |
 
-## Estrutura de diretórios e pacotes (scaffolding)
-
-Para evitar conflitos de merge e erros de importação, a estrutura de pacotes Java e scripts deve seguir rigorosamente a árvore abaixo. Todos os arquivos já estão instanciados vazios no repositório.
+## Estrutura de diretórios e pacotes
 
 ```text
 orquestrador-threads/
