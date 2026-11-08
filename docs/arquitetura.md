@@ -45,3 +45,34 @@ Para garantir que o código das quatro frentes se conecte perfeitamente sem conf
 | **03-concorrencia**| `RegiaoCritica` | `void sairLeitor()` | Libera a região e notifica outras threads na fila. |
 | **03-concorrencia**| `RegiaoCritica` | `void entrarEscritor()` | Trava a thread escritora caso a base não esteja 100% vazia. |
 | **03-concorrencia**| `RegiaoCritica` | `void sairEscritor()` | Libera a região e notifica outras threads na fila. |
+
+## Estrutura de diretórios e pacotes (scaffolding)
+
+Para evitar conflitos de merge e erros de importação, a estrutura de pacotes Java e scripts deve seguir rigorosamente a árvore abaixo. Todos os arquivos já estão instanciados vazios no repositório.
+
+```text
+orquestrador-threads/
+├── data/
+│   ├── bd.txt                     # Arquivo original com as 36.242 palavras
+│   └── saida_tempos.csv           # Arquivo gerado pelo Java para o Python ler
+├── src/
+│   ├── main/java/
+│   │   ├── dados/                 # Arquivos da Frente 01
+│   │   │   ├── BaseDados.java
+│   │   │   └── ExportadorMetricas.java
+│   │   │
+│   │   ├── threads/               # Arquivos da Frente 02
+│   │   │   ├── ThreadLeitora.java
+│   │   │   └── ThreadEscritora.java
+│   │   │
+│   │   ├── concorrencia/          # Arquivos da Frente 03
+│   │   │   ├── RegiaoCritica.java
+│   │   │   ├── TravaGlobal.java
+│   │   │   └── TravaLeitoresEscritores.java
+│   │   │
+│   │   └── orquestracao/          # Arquivos da Frente 04
+│   │       └── MotorSimulador.java # Contém o public static void main
+│   │
+│   └── scripts/                   # Arquivos da Frente 05
+│       └── gerador_graficos.py
+```
