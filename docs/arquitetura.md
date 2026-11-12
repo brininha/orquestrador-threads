@@ -40,7 +40,7 @@ Para garantir que o código das quatro frentes se conecte perfeitamente sem conf
 | :--- | :--- | :--- | :--- |
 | **01-dados-io** | `BaseDados` | `String ler(int indice)` | Retorna a palavra da base na posição informada. |
 | **01-dados-io** | `BaseDados` | `void escrever(int indice)` | Substitui o valor na posição pela string padrão ("MODIFICADO"). |
-| **01-dados-io** | `ExportadorMetricas` | `void salvarRodada(int leitores, int escritores, String tipo, long tempoMs)` | Salva a linha de resultado no arquivo CSV. |
+| **01-dados-io** | `ExportadorMetricas` | `void salvarRodada(int leitores, int escritores, String tipoTrava, long tempoMs)` | Salva a linha no CSV. **Regra:** cabeçalho exato `proporcao_leitores,proporcao_escritores,tipo_trava,tempo_medio_ms`, separado por vírgula. O `tipoTrava` deve ser estritamente `"global"` ou `"leitor_escritor"`. |
 | **03-concorrencia**| `RegiaoCritica` | `void entrarLeitor()` | Trava a thread leitora caso a regra de sincronização exija espera. |
 | **03-concorrencia**| `RegiaoCritica` | `void sairLeitor()` | Libera a região e notifica outras threads na fila. |
 | **03-concorrencia**| `RegiaoCritica` | `void entrarEscritor()` | Trava a thread escritora caso a base não esteja 100% vazia. |
