@@ -11,5 +11,5 @@
 | **T3.3** | Sincronizador Leitores/Escritores (com prioridade para leitores) | 03-concorrencia | T3.1 | A fazer |
 | **T4.1** | Instanciação e embaralhamento aleatório do arranjo de 100 threads | 04-orquestracao | T2.1 | A fazer |
 | **T4.2** | Loop de 101 proporções x 50 repetições, acionamento do `join()` e timers | 04-orquestracao | T4.1, T3.1 | A fazer |
-| **T5.1** | Leitura do CSV e geração de gráficos de tempo médio com scripts (Python/Pandas) | 05-analise | Nenhuma (usar dados mockados para testar) | A fazer |
+| **T5.1** | Leitura do CSV e geração de gráficos de tempo médio com scripts (Python/Pandas) | 05-analise | Nenhuma (usar dados mockados para testar) | Concluída |
 | **T5.2** | Redação do relatório PDF avaliando o ganho de desempenho | 05-analise | T5.1 | A fazer |
