@@ -4,7 +4,7 @@
 | :--- | :--- | :--- | :--- | :--- |
 | **T1.1** | Carga das 36.242 palavras do arquivo `bd.txt` para a memória | 01-dados-io | Nenhuma | Concluído |
 | **T1.2** | Métodos de leitura e sobrescrita ("MODIFICADO") na base | 01-dados-io | T1.1 | Concluído |
-| **T1.3** | Exportação dos tempos coletados para arquivo CSV | 01-dados-io | Nenhuma | A fazer |
+| **T1.3** | Exportação dos tempos coletados para arquivo CSV | 01-dados-io | Nenhuma | Concluído |
 | **T2.1** | Implementação das threads leitora e escritora (100 acessos + soneca de 1ms) | 02-threads | T1.2 | A fazer |
 | **T3.1** | Interface `RegiaoCritica` para padronizar os acessos | 03-concorrencia | Nenhuma | A fazer |
 | **T3.2** | Sincronizador de trava global (bloqueio total da base) | 03-concorrencia | T3.1 | A fazer |
