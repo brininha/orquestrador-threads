@@ -1,9 +1,16 @@
-import pandas as pd
-import numpy as np
-import os
+"""Gera dados fictícios no formato do CSV do Java, só para testar os scripts.
 
-# Cria o diretório data caso não exista no seu Ubuntu
-os.makedirs('data', exist_ok=True)
+Grava em data/saida_tempos_mock.csv para nunca sobrescrever os tempos reais. Para usar:
+    python src/scripts/gerar_mock.py
+    python src/scripts/gerar_tudo.py data/saida_tempos_mock.csv
+"""
+import numpy as np
+import pandas as pd
+
+from configuracao import DADOS
+
+SAIDA = DADOS / 'saida_tempos_mock.csv'
+DADOS.mkdir(exist_ok=True)
 
 dados = []
 
@@ -22,6 +29,6 @@ for leitores in range(101):
         dados.append([leitores, escritores, 'leitor_escritor', round(max(10, tempo_rw), 2)])
 
 df_mock = pd.DataFrame(dados, columns=['proporcao_leitores', 'proporcao_escritores', 'tipo_trava', 'tempo_medio_ms'])
-df_mock.to_csv('data/saida_tempos.csv', index=False)
+df_mock.to_csv(SAIDA, index=False)
 
-print("Arquivo data/saida_tempos.csv gerado com sucesso para testes!")
+print(f"Dados fictícios gravados em {SAIDA}")

@@ -18,7 +18,7 @@ Para fins didáticos, a base de dados inteira deve ser tratada como uma única r
 
 ## Estratégia de testes e coleta de dados (integração)
 - **Isolamento de estado:** A cada nova rodada (das 50 repetições para cada proporção), o arranjo de threads não pode ser reaproveitado. Ele deve ser instanciado e embaralhado novamente.
-- **Contrato de saída:** O programa Java não deve gerar gráficos, apenas cuspir um arquivo de saída estruturado (como CSV) contendo: `Proporcao_Leitores, Proporcao_Escritores, Tipo_Implementacao, Tempo_Medio_MS`.
+- **Contrato de saída:** O programa Java não deve gerar gráficos, apenas cuspir um arquivo de saída estruturado (como CSV) com uma linha **por rodada** e o cabeçalho `proporcao_leitores,proporcao_escritores,tipo_trava,tempo_medio_ms` (ver contratos abaixo). Apesar do nome, `tempo_medio_ms` guarda o tempo de uma rodada; a média das 50 repetições é calculada pelos scripts Python.
 - **Análise dos dados:** Um script Python (utilizando Pandas e Matplotlib) lerá o arquivo CSV gerado pelo Java para construir os gráficos de comparação de desempenho necessários para o relatório em LaTeX.
 
 ## Fluxo de execução
@@ -51,27 +51,33 @@ Para garantir que o código das quatro frentes se conecte perfeitamente sem conf
 ```text
 orquestrador-threads/
 ├── data/
-│   ├── bd.txt                     # Arquivo original com as 36.242 palavras
-│   └── saida_tempos.csv           # Arquivo gerado pelo Java para o Python ler
+│   ├── bd.txt                       # Arquivo original com as 36.242 palavras
+│   ├── saida_tempos.csv             # Gerado pelo Java (uma linha por rodada)
+│   ├── grafico_*.pdf                # Gerados pelos scripts Python
+│   └── tabela_ganho.{csv,tex}       # Gerados pelos scripts Python
 ├── src/
 │   ├── main/java/
-│   │   ├── dados/                 # Arquivos da Frente 01
+│   │   ├── dados/                   # Frente 01
 │   │   │   ├── BaseDados.java
 │   │   │   └── ExportadorMetricas.java
-│   │   │
-│   │   ├── threads/               # Arquivos da Frente 02
+│   │   ├── threads/                 # Frente 02
+│   │   │   ├── ThreadTrabalhadora.java  # run() comum: entrar, 100 acessos, soneca, sair
 │   │   │   ├── ThreadLeitora.java
 │   │   │   └── ThreadEscritora.java
-│   │   │
-│   │   ├── concorrencia/          # Arquivos da Frente 03
+│   │   ├── concorrencia/            # Frente 03
 │   │   │   ├── RegiaoCritica.java
 │   │   │   ├── TravaGlobal.java
 │   │   │   └── TravaLeitoresEscritores.java
-│   │   │
-│   │   └── orquestracao/          # Arquivos da Frente 04
+│   │   └── orquestracao/            # Frente 04
 │   │       ├── MontadorArranjo.java # Cria e embaralha as 100 threads (T4.1)
-│   │       └── MotorSimulador.java  # Contém o public static void main (T4.2)
-│   │
-│   └── scripts/                   # Arquivos da Frente 05
-│       └── gerador_graficos.py
+│   │       └── MotorSimulador.java  # public static void main (T4.2)
+│   └── scripts/                     # Frente 05
+│       ├── configuracao.py          # Caminhos, rótulos e cores compartilhados
+│       ├── gerar_tudo.py            # Roda todos os scripts abaixo
+│       ├── gerador_graficos.py      # Tempo médio por proporção
+│       ├── analise_variancia.py     # Desvio padrão e boxplots
+│       ├── analise_tabela.py        # Tabela de ganho (CSV e LaTeX)
+│       ├── analise_piores_cenarios.py # 0 leitoras x 100 escritoras
+│       └── gerar_mock.py            # Dados fictícios (data/saida_tempos_mock.csv)
+└── docs/                            # Documentação e histórico de sessões
 ```
