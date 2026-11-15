@@ -1,10 +1,15 @@
 package threads;
 
-
-import dados.BaseDados;
-import java.util.concurrent.ThreadLocalRandom;
 import concorrencia.RegiaoCritica;
+import dados.BaseDados;
 
+import java.util.concurrent.ThreadLocalRandom;
+
+/**
+ * Comportamento comum das threads: entra na região crítica, faz {@value #TOTAL_ACESSOS}
+ * acessos a posições aleatórias, dorme {@value #SONECA_MS} ms ainda dentro da região e sai.
+ * As subclasses só definem qual par entrar/sair usar e qual acesso fazer.
+ */
 abstract class ThreadTrabalhadora extends Thread {
 
     static final int TOTAL_ACESSOS = 100;
