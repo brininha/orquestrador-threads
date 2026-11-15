@@ -56,7 +56,7 @@ def gerar_graficos_variancia():
         labels.append(f'{c}%\nL/E')
         cores.append('#1f77b4')
         
-    bplot = plt.boxplot(dados_plot, patch_artist=True, label=labels)
+    bplot = plt.boxplot(dados_plot, patch_artist=True, tick_labels=labels)
     
     # Aplica as cores correspondentes para manter a identidade visual
     for patch, color in zip(bplot['boxes'], cores):

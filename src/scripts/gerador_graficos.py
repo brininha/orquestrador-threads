@@ -31,6 +31,7 @@ def gerar_graficos():
     # Salva diretamente em PDF para manter a imagem vetorizada e não perder qualidade no relatório
     plt.tight_layout()
     plt.savefig('data/grafico_desempenho.pdf', format='pdf')
+    plt.close()
     print("Gráfico salvo em data/grafico_desempenho.pdf")
 
 if __name__ == "__main__":
