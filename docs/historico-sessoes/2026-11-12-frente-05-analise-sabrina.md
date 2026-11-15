@@ -14,11 +14,11 @@ Em seguida, criamos um pipeline completo de análise estatística em Python/Pand
 4. **Tabela de break-even:** Geração de uma tabela calculando o ganho percentual, exportada automaticamente em um arquivo nativo `.tex` para fácil inclusão no LaTeX.
 
 ## Arquivos criados/modificados
-- `gerar_mock.py` (na raiz, ferramenta de apoio para gerar `data/saida_tempos.csv`)
-- `scripts/gerador_graficos.py`
-- `scripts/analise_variancia.py`
-- `scripts/analise_tabela.py`
-- `scripts/analise_piores_cenarios.py`
+- `src/scripts/gerar_mock.py` (ferramenta de apoio; hoje grava em `data/saida_tempos_mock.csv`)
+- `src/scripts/gerador_graficos.py`
+- `src/scripts/analise_variancia.py`
+- `src/scripts/analise_tabela.py`
+- `src/scripts/analise_piores_cenarios.py`
 
 ## Decisões de design e setup
 - Todos os gráficos estão sendo salvos em formato `.pdf` para manter a vetorização e evitar perda de qualidade na importação do LaTeX.
