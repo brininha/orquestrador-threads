@@ -1,8 +1,9 @@
-import pandas as pd
 import matplotlib.pyplot as plt
 
+from configuracao import CORES, DADOS, PDF_SEM_DATA, ROTULOS, carregar_tempos
+
 def gerar_grafico_pior_cenario():
-    df = pd.read_csv('data/saida_tempos.csv')
+    df = carregar_tempos()
 
     # Filtra exclusivamente o cenário sem nenhum leitor (100% escritores)
     df_pior = df[df['proporcao_leitores'] == 0]
@@ -15,9 +16,9 @@ def gerar_grafico_pior_cenario():
 
     plt.figure(figsize=(8, 6))
     
-    barras = plt.bar(['Trava global', 'Leitores e escritores'], 
-                     [tempo_global, tempo_rw], 
-                     color=['#d62728', '#1f77b4'],
+    barras = plt.bar([ROTULOS['global'], ROTULOS['leitor_escritor']],
+                     [tempo_global, tempo_rw],
+                     color=[CORES['global'], CORES['leitor_escritor']],
                      width=0.6)
     
     # Textos seguindo a capitalização do português brasileiro
@@ -33,7 +34,7 @@ def gerar_grafico_pior_cenario():
                  
     plt.grid(True, axis='y', linestyle='--', alpha=0.7)
     plt.tight_layout()
-    plt.savefig('data/grafico_pior_cenario.pdf', format='pdf')
+    plt.savefig(DADOS / 'grafico_pior_cenario.pdf', format='pdf', metadata=PDF_SEM_DATA)
     plt.close()
     
     print("Gráfico do pior cenário exportado em PDF com sucesso!")

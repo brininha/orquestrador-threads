@@ -1,4 +1,4 @@
-pandas
-numpy
-matplotlib
-Jinja2
+pandas>=2.0
+numpy>=1.24
+matplotlib>=3.9  # tick_labels no boxplot
+Jinja2>=3.1      # exigido pelo DataFrame.to_latex

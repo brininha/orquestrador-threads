@@ -1,7 +1,7 @@
-import pandas as pd
+from configuracao import DADOS, carregar_tempos
 
 def gerar_tabela_ganho():
-    df = pd.read_csv('data/saida_tempos.csv')
+    df = carregar_tempos()
 
     # Calcula a média de tempo para cada proporção e tipo de trava
     df_media = df.groupby(['proporcao_leitores', 'tipo_trava'])['tempo_medio_ms'].mean().reset_index()
@@ -24,19 +24,19 @@ def gerar_tabela_ganho():
     df_pivot = df_pivot.round(2)
 
     # Salva o arquivo CSV padrão
-    df_pivot.to_csv('data/tabela_ganho.csv', index=False)
+    df_pivot.to_csv(DADOS / 'tabela_ganho.csv', index=False)
 
     # Exporta a tabela formatada diretamente para LaTeX
     # longtable quebra as 101 linhas entre páginas; float_format evita os 6 dígitos padrão
-    df_pivot.to_latex('data/tabela_ganho.tex', index=False, longtable=True,
+    df_pivot.to_latex(DADOS / 'tabela_ganho.tex', index=False, longtable=True,
                       float_format='%.2f', escape=True,
                       caption='Tempo médio (50 repetições) por proporção de leitoras e ganho da solução de leitores e escritores sobre a trava global.',
                       label='tab:ganho')
 
     # O pandas escreve o aviso de quebra de página em inglês
-    with open('data/tabela_ganho.tex', encoding='utf-8') as f:
+    with open(DADOS / 'tabela_ganho.tex', encoding='utf-8') as f:
         tex = f.read()
-    with open('data/tabela_ganho.tex', 'w', encoding='utf-8') as f:
+    with open(DADOS / 'tabela_ganho.tex', 'w', encoding='utf-8') as f:
         f.write(tex.replace('Continued on next page', 'Continua na próxima página'))
     
     print("Tabelas exportadas em CSV e LaTeX com sucesso!")
