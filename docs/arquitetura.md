@@ -69,7 +69,8 @@ orquestrador-threads/
 │   │   │   └── TravaLeitoresEscritores.java
 │   │   │
 │   │   └── orquestracao/          # Arquivos da Frente 04
-│   │       └── MotorSimulador.java # Contém o public static void main
+│   │       ├── MontadorArranjo.java # Cria e embaralha as 100 threads (T4.1)
+│   │       └── MotorSimulador.java  # Contém o public static void main (T4.2)
 │   │
 │   └── scripts/                   # Arquivos da Frente 05
 │       └── gerador_graficos.py
