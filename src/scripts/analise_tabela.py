@@ -13,12 +13,12 @@ def gerar_tabela_ganho():
     df_pivot['ganho_percentual'] = ((df_pivot['global'] - df_pivot['leitor_escritor']) / df_pivot['global']) * 100
 
     # Renomeia os cabeçalhos seguindo as convenções de maiúsculas apenas no início
-    df_pivot.rename(columns={
+    df_pivot = df_pivot.rename(columns={
         'proporcao_leitores': 'Proporção de leitoras (%)',
         'global': 'Trava global (ms)',
         'leitor_escritor': 'Leitores e escritores (ms)',
         'ganho_percentual': 'Ganho percentual (%)'
-    }, inplace=True)
+    })
 
     # Arredonda os valores para duas casas decimais
     df_pivot = df_pivot.round(2)
@@ -27,7 +27,17 @@ def gerar_tabela_ganho():
     df_pivot.to_csv('data/tabela_ganho.csv', index=False)
 
     # Exporta a tabela formatada diretamente para LaTeX
-    df_pivot.to_latex('data/tabela_ganho.tex', index=False)
+    # longtable quebra as 101 linhas entre páginas; float_format evita os 6 dígitos padrão
+    df_pivot.to_latex('data/tabela_ganho.tex', index=False, longtable=True,
+                      float_format='%.2f', escape=True,
+                      caption='Tempo médio (50 repetições) por proporção de leitoras e ganho da solução de leitores e escritores sobre a trava global.',
+                      label='tab:ganho')
+
+    # O pandas escreve o aviso de quebra de página em inglês
+    with open('data/tabela_ganho.tex', encoding='utf-8') as f:
+        tex = f.read()
+    with open('data/tabela_ganho.tex', 'w', encoding='utf-8') as f:
+        f.write(tex.replace('Continued on next page', 'Continua na próxima página'))
     
     print("Tabelas exportadas em CSV e LaTeX com sucesso!")
 
